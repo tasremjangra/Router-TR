@@ -4,33 +4,49 @@ import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 class Productprofile extends React.Component {
 	constructor(props){
 		super(props);
-		this.state={image:["https://image.shutterstock.com/image-photo/headphones-isolated-on-white-background-260nw-377641141.jpg",
-		"http://lghttp.50157.nexcesscdn.net/8028284/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/a/u/audition_1.png",
-		"http://pngimg.com/uploads/headphones/headphones_PNG7631.png"],currentIndex:0}
+		this.state={product:[],currentIndex:0,username:"sumit"}
 	}
 
-	Next = (e) =>
+	componentWillMount(){
+    const username =this.state.username;
+    fetch('http://localhost:9000/test',{
+    method:'POST',
+    headers : {
+      'Accept' : 'application/json',
+      'Content-Type':'application/json' 
+    },
+    body:JSON.stringify({
+      username:username
+    })
+    })
+    .then(response => response.json())
+    .then(data => this.setState({product:data}))
+    console.log('this is my componentWillMount');
+  }
+
+	Next = () =>
 	{
-		let currentIndex = 0;
-		 this.setState(prevState => ({
-      currentIndex: prevState.currentIndex + 1
-    }));
+		this.setState({currentIndex: this.state.currentIndex+1});
+
+		if(this.state.currentIndex === 4){
+			this.setState({currentIndex : 0});
+		}	
+	}
+
+	pre = () =>
+	{
+		this.setState({currentIndex: this.state.currentIndex-1});
 		
+		if(this.state.currentIndex === 0){
+			this.setState({currentIndex : 4});
+		}
 	}
 	render(){
-		let index = 0;
 	  return(
 	  	<div className="Productprofile">
-	  		
-	  		<img src={this.state.image[index]} ></img>
-	  		{this.state.image.map(function(abc,index){
-	  			return <div>
-	  				<img src={abc.image}></img>
-	  				</div>
-	  		}
-	  			
-	  			)}
-	  			<button onClick={this.Next}>Next</button>
+	  		<button onClick={this.pre}>pre</button>
+	  		 <h1>hello<img src={this.state.product[this.state.currentIndex]} height="500px" width="500px"></img></h1><br/>
+	  		<button onClick={this.Next}>Next</button>
 	  	</div>
 	  )	;
 	}

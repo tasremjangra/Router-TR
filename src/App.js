@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import ProductList from './ProductList';
 import Productprofile from './Productprofile';
-import {BrowserRouter as Router ,Route,Link,withRouter} from "react-router-dom";
 
 class App extends Component {
   constructor(props){

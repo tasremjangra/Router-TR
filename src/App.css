@@ -37,6 +37,7 @@
 .ProductList{
   height: 200px;
   background-color:;
+  border: 2px solid #444;
 }
 @keyframes App-logo-spin {
   from {
